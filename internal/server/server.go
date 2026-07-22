@@ -159,7 +159,7 @@ func (s *Server) loggingMiddleware(next http.Handler) http.Handler {
 		log.WithFields(log.Fields{
 			"method":   r.Method,
 			"path":     r.URL.Path,
-			"port":     r.URL.Port(),
+			"addr":     s.server.Addr,
 			"status":   wrapped.statusCode,
 			"duration": time.Since(start).String(),
 		}).Debug("HTTP request")
