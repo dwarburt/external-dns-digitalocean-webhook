@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/dwarburt/external-dns-digitalocean-webhook/compare/v1.0.1...v1.0.2) (2026-07-22)
+
+
+### Miscellaneous Chores
+
+* release 1.0.2 ([87f3b36](https://github.com/dwarburt/external-dns-digitalocean-webhook/commit/87f3b36561bb7a09dda62eafabe7cad189d0a3ce))
+
 ## [1.0.1](https://github.com/dwarburt/external-dns-digitalocean-webhook/compare/v1.0.2...v1.0.1) (2026-07-21)
 
 
