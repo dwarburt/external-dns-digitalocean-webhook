@@ -88,13 +88,13 @@ func (s *Server) Start(ctx context.Context) error {
 
 	s.server = &http.Server{
 		Addr:         webhookAddr,
-		Handler:      s.loggingMiddleware(s.buildWebhookMux()),
+		Handler:      s.loggingMiddleware(s.buildWebhookMux(), webhookAddr),
 		ReadTimeout:  s.config.ReadTimeout,
 		WriteTimeout: s.config.WriteTimeout,
 	}
 	s.healthServer = &http.Server{
 		Addr:         healthAddr,
-		Handler:      s.loggingMiddleware(s.buildHealthMux()),
+		Handler:      s.loggingMiddleware(s.buildHealthMux(), healthAddr),
 		ReadTimeout:  s.config.ReadTimeout,
 		WriteTimeout: s.config.WriteTimeout,
 	}
@@ -151,7 +151,7 @@ func (s *Server) Start(ctx context.Context) error {
 	return firstErr
 }
 
-func (s *Server) loggingMiddleware(next http.Handler) http.Handler {
+func (s *Server) loggingMiddleware(next http.Handler, addr string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		wrapped := &responseWriter{ResponseWriter: w, statusCode: http.StatusOK}
@@ -159,7 +159,7 @@ func (s *Server) loggingMiddleware(next http.Handler) http.Handler {
 		log.WithFields(log.Fields{
 			"method":   r.Method,
 			"path":     r.URL.Path,
-			"addr":     s.server.Addr,
+			"addr":     addr,
 			"status":   wrapped.statusCode,
 			"duration": time.Since(start).String(),
 		}).Debug("HTTP request")
