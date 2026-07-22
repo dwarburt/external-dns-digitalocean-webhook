@@ -291,7 +291,7 @@ func TestLoggingMiddleware(t *testing.T) {
 
 	handler := srv.loggingMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-	}))
+	}), "test")
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
 	rr := httptest.NewRecorder()
